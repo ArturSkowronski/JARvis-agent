@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "generate-results": "node scripts/generate-results.js",
-    "generate-draft": "node scripts/generate-draft.js"
+    "generate-draft": "node scripts/generate-draft.js",
+    "generate-linkedin": "node scripts/generate-final.js linkedin",
+    "generate-substack": "node scripts/generate-final.js substack"
   },
   "dependencies": {
     "@npmcli/fs": "^4.0.0",

@@ -158,6 +158,20 @@ The API responds with a JSON object containing `url`, pointing to the generated
 The markdown file lists each original URL with its summary followed by the
 uploaded images at the end.
 
+### Generating platform-specific posts
+
+Provide author handle mappings in `linkedin.json` or `substack.json` at the
+project root. Run one of the following commands to create a final markdown file
+tailored for each platform:
+
+```bash
+npm run generate-linkedin
+npm run generate-substack
+```
+
+The scripts replace any `@Author Name` mention in your summaries with the
+configured handle and append a list of authors that were not matched.
+
 ## Contributing
 
 You are welcome to open issues or submit PRs to improve this app, however, please note that we may not review all suggestions.

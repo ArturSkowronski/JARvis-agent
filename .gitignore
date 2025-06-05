@@ -42,3 +42,4 @@ yarn-error.log*
 next-env.d.ts
 results.md
 draft.md
+final-*.md
