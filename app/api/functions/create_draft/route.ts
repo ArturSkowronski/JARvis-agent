@@ -52,6 +52,10 @@ export async function POST() {
         }
       }
     }
+    // include original images if no Imgur uploads succeeded
+    if (uploaded.length === 0 && images.length > 0) {
+      uploaded.push(...images);
+    }
 
     for (const link of uploaded) {
       md += `![Image](${link})\n\n`;
