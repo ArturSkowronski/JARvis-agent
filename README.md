@@ -58,6 +58,18 @@ This app is meant to be used as a starting point to build a conversational assis
 
    The app will be available at [`http://localhost:3000`](http://localhost:3000).
 
+## Fact checking script
+
+An additional script `scripts/fact-check.js` reads the contents of `input.md` and
+uses the `gpt-4o` model to verify each factual claim. Run it with:
+
+```bash
+node scripts/fact-check.js
+```
+
+Ensure your `OPENAI_API_KEY` environment variable is set before running the
+script.
+
 ## Contributing
 
 You are welcome to open issues or submit PRs to improve this app, however, please note that we may not review all suggestions.
