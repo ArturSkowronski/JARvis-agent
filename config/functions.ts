@@ -95,6 +95,24 @@ export const generate_draft = async () => {
   return data;
 };
 
+export const generate_linkedin = async () => {
+  const res = await fetch(`/api/functions/generate_final`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ platform: "linkedin" }),
+  });
+  return res.json();
+};
+
+export const generate_substack = async () => {
+  const res = await fetch(`/api/functions/generate_final`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ platform: "substack" }),
+  });
+  return res.json();
+};
+
 export const functionsMap = {
   get_weather: get_weather,
   get_joke: get_joke,
@@ -103,4 +121,6 @@ export const functionsMap = {
   create_graphic: create_graphic,
   create_draft: create_draft,
   generate_draft: generate_draft,
+  generate_linkedin: generate_linkedin,
+  generate_substack: generate_substack,
 };
