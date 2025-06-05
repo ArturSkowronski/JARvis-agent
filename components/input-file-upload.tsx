@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 export default function InputFileUpload() {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [factCheckResult, setFactCheckResult] = useState<string | null>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -37,6 +38,16 @@ export default function InputFileUpload() {
       if (!res.ok) {
         throw new Error("Failed to upload file");
       }
+      const text = await file.text();
+      const factRes = await fetch("/api/functions/fact_check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      if (factRes.ok) {
+        const data = await factRes.json();
+        setFactCheckResult(data.output);
+      }
       setFile(null);
     } catch (err) {
       console.error(err);
@@ -51,6 +62,11 @@ export default function InputFileUpload() {
       <Button type="submit" disabled={!file || uploading}>
         {uploading ? "Uploading..." : "Upload"}
       </Button>
+      {factCheckResult && (
+        <pre className="whitespace-pre-wrap mt-4 text-sm text-left">
+          {factCheckResult}
+        </pre>
+      )}
     </form>
   );
 }
