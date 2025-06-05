@@ -3,6 +3,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const url = searchParams.get("url");
     const mode = searchParams.get("mode") || "describe";
+    const paragraphs = parseInt(searchParams.get("paragraphs") || "1", 10);
 
     if (!url) {
       return new Response(JSON.stringify({ error: "Missing url" }), { status: 400 });
@@ -46,6 +47,7 @@ export async function GET(request: Request) {
     } else {
       system += " Provide a concise summary without referencing the author.";
     }
+    system += ` Use exactly ${paragraphs} paragraph${paragraphs === 1 ? "" : "s"}.`;
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -56,6 +58,21 @@ export async function GET(request: Request) {
     });
 
     const summary = completion.choices[0].message.content;
+    try {
+      const { promises: fs } = await import("fs");
+      const path = (await import("path")).default;
+      const summariesFile = path.join(process.cwd(), "public", "summaries.json");
+      let existing: any[] = [];
+      try {
+        existing = JSON.parse(await fs.readFile(summariesFile, "utf8"));
+      } catch {
+        existing = [];
+      }
+      existing.push({ url, summary });
+      await fs.writeFile(summariesFile, JSON.stringify(existing, null, 2));
+    } catch (err) {
+      console.error("Error writing summaries:", err);
+    }
     return new Response(JSON.stringify({ summary }), { status: 200 });
   } catch (error) {
     console.error("Error summarizing url:", error);

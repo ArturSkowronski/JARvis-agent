@@ -92,7 +92,7 @@ script.
 ## Summarizing links
 
 The `summarize_url` function lets the assistant fetch a web page and produce a concise summary.
-You can control the style with the `mode` parameter:
+You can control the style with the `mode` parameter and limit the length with an optional `paragraphs` argument:
 
 - `reference` – Include a citation to the author, e.g. `In [title](url) @Author wrote ...`.
 - `describe` – Provide a short description without citing the author.
@@ -104,10 +104,20 @@ To trigger the tool from the UI:
 2. Ask the assistant to summarize a link, for example:
 
    ```
-   Summarize https://example.com in reference mode using the summarize_url tool.
+   Summarize https://example.com in reference mode using the summarize_url tool and return it in 2 paragraphs.
    ```
 
    The assistant will call the tool and display the generated summary.
+
+### Exporting summaries
+
+All summaries generated during a session are stored in `public/summaries.json`. You can convert this list into a Markdown file with:
+
+```bash
+npm run generate-results
+```
+
+This will produce a `results.md` file listing each URL followed by its summary.
 
 ## Contributing
 

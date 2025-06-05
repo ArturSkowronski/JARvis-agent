@@ -39,7 +39,7 @@ export const fact_check = async ({ text }: { text: string }) => {
       role: "user",
       content: `Fact check the following text using the gpt-4o model and provide recommendations for corrections if needed.\n\n${text}`,
     },
-  ];
+  ] as any;
 
   const completion = await openai.chat.completions.create({
     model: "gpt-4o",
@@ -49,16 +49,25 @@ export const fact_check = async ({ text }: { text: string }) => {
   return completion.choices[0].message.content;
 };
 
+import useSummaryStore from "@/stores/useSummaryStore";
+
 export const summarize_url = async ({
   url,
   mode,
+  paragraphs,
 }: {
   url: string;
   mode: "reference" | "describe" | "release";
+  paragraphs?: number;
 }) => {
   const params = new URLSearchParams({ url, mode });
+  if (paragraphs) params.append("paragraphs", paragraphs.toString());
   const res = await fetch(`/api/functions/summarize_url?${params.toString()}`);
-  return await res.json();
+  const data = await res.json();
+  if (data.summary) {
+    useSummaryStore.getState().addSummary({ url, summary: data.summary });
+  }
+  return data;
 };
 
 export const functionsMap = {
