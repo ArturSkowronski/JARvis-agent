@@ -141,7 +141,8 @@ This will produce a `results.md` file listing each URL followed by its summary.
 
 All generated images are stored in `public/images.json`. You can compile all
 summaries and uploaded image links into `draft.md` using the `create_draft` tool
-or by running:
+or by running `npm run generate-draft`. Alternatively, you can call the API
+directly with:
 
 ```bash
 curl -X POST http://localhost:3000/api/functions/create_draft
