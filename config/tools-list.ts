@@ -54,4 +54,14 @@ export const toolsList = [
     description: "Compile all summaries and images into draft.md and return the file link",
     parameters: {},
   },
+  {
+    name: "generate_linkedin",
+    description: "Create a final markdown using linkedin.json handle mappings",
+    parameters: {},
+  },
+  {
+    name: "generate_substack",
+    description: "Create a final markdown using substack.json handle mappings",
+    parameters: {},
+  },
 ];
