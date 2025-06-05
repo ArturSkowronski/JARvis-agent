@@ -73,6 +73,9 @@ node scripts/fact-check.js
 Ensure your `OPENAI_API_KEY` environment variable is set before running the
 script.
 
+The tool now performs a second fact-check pass on its own output, so the
+response includes both the initial analysis and a verification section.
+
 ### Triggering the `fact_check` tool from the UI
 
 1. Start the development server with `npm run dev` and open

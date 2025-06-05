@@ -45,8 +45,26 @@ export const fact_check = async ({ text }: { text: string }) => {
     model: "gpt-4o",
     messages,
   });
+  const result = completion.choices[0].message.content as string;
 
-  return completion.choices[0].message.content;
+  const verifyMessages = [
+    {
+      role: "system",
+      content:
+        "You are verifying the output of a fact check. Ensure each statement and correction is accurate.",
+    },
+    {
+      role: "user",
+      content: `Verify the following fact check result:\n\n${result}`,
+    },
+  ] as any;
+
+  const verification = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: verifyMessages,
+  });
+
+  return `${result}\n\n---\nVerification:\n${verification.choices[0].message.content}`;
 };
 
 import useSummaryStore from "@/stores/useSummaryStore";
