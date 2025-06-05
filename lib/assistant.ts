@@ -59,6 +59,12 @@ export const handleTurn = async (
 
     if (!response.ok) {
       console.error(`Error: ${response.status} - ${response.statusText}`);
+      let message = `Error ${response.status}`;
+      try {
+        const errorData = await response.json();
+        message = errorData.error || message;
+      } catch {}
+      onMessage({ event: "error", data: message });
       return;
     }
 
@@ -338,6 +344,17 @@ export const processMessages = async () => {
           toolCallMessage.status = "completed";
           setChatMessages([...chatMessages]);
         }
+        break;
+      }
+
+      case "error": {
+        const message = typeof data === "string" ? data : data?.error || "Error";
+        chatMessages.push({
+          type: "message",
+          role: "assistant",
+          content: [{ type: "output_text", text: message }],
+        });
+        setChatMessages([...chatMessages]);
         break;
       }
 

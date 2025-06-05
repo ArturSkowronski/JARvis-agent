@@ -52,7 +52,7 @@ export const toolsList = [
         description: "Number of paragraphs to summarize into",
       },
     },
-    required: ["url", "mode"],
+    required: ["url", "mode", "paragraphs"],
   },
   {
     name: "create_graphic",
