@@ -5,6 +5,7 @@ import WebSearchConfig from "./websearch-config";
 import FunctionsView from "./functions-view";
 import PanelConfig from "./panel-config";
 import useToolsStore from "@/stores/useToolsStore";
+import InputFileUpload from "./input-file-upload";
 
 export default function ContextPanel() {
   const {
@@ -42,6 +43,10 @@ export default function ContextPanel() {
         >
           <FunctionsView />
         </PanelConfig>
+        <div className="space-y-2">
+          <h1 className="text-black font-medium">Upload input.md</h1>
+          <InputFileUpload />
+        </div>
       </div>
     </div>
   );
