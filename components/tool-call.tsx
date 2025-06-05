@@ -1,4 +1,5 @@
 import React from "react";
+import useConversationStore from "@/stores/useConversationStore";
 
 import { ToolCallItem } from "@/lib/assistant";
 import { BookOpenText, Clock, Globe, Zap } from "lucide-react";
@@ -10,6 +11,33 @@ interface ToolCallProps {
 }
 
 function ApiCallCell({ toolCall }: ToolCallProps) {
+  const [extra, setExtra] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const { chatMessages, setChatMessages } = useConversationStore();
+
+  const handleReload = async () => {
+    if (!toolCall.parsedArguments) return;
+    setLoading(true);
+    try {
+      const description = `${toolCall.parsedArguments.description ?? ""} ${extra}`.trim();
+      const res = await fetch("/api/functions/create_graphic", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description }),
+      });
+      const data = await res.json();
+      toolCall.output = JSON.stringify(data);
+      setChatMessages([...chatMessages]);
+      setExtra("");
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const output = toolCall.output ? JSON.parse(toolCall.output) : null;
+
   return (
     <div className="flex flex-col w-[70%] relative mb-[-8px]">
       <div>
@@ -41,20 +69,42 @@ function ApiCallCell({ toolCall }: ToolCallProps) {
                 {JSON.stringify(toolCall.parsedArguments, null, 2)}
               </SyntaxHighlighter>
             </div>
-            <div className="max-h-96 overflow-y-scroll mx-6 p-2 text-xs">
-              {toolCall.output ? (
-                <SyntaxHighlighter
-                  customStyle={{
-                    backgroundColor: "#fafafa",
-                    padding: "8px",
-                    paddingLeft: "0px",
-                    marginTop: 0,
-                  }}
-                  language="json"
-                  style={coy}
-                >
-                  {JSON.stringify(JSON.parse(toolCall.output), null, 2)}
-                </SyntaxHighlighter>
+            <div className="max-h-96 overflow-y-scroll mx-6 p-2 text-xs flex flex-col gap-2">
+              {output ? (
+                toolCall.name === "create_graphic" ? (
+                  <>
+                    <img src={output.url} className="max-w-full rounded-md" />
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        className="border px-1 text-xs flex-grow"
+                        placeholder="Add context"
+                        value={extra}
+                        onChange={(e) => setExtra(e.target.value)}
+                      />
+                      <button
+                        onClick={handleReload}
+                        disabled={loading}
+                        className="text-blue-600 text-xs"
+                      >
+                        {loading ? "Loading..." : "Reload"}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <SyntaxHighlighter
+                    customStyle={{
+                      backgroundColor: "#fafafa",
+                      padding: "8px",
+                      paddingLeft: "0px",
+                      marginTop: 0,
+                    }}
+                    language="json"
+                    style={coy}
+                  >
+                    {JSON.stringify(output, null, 2)}
+                  </SyntaxHighlighter>
+                )
               ) : (
                 <div className="text-zinc-500 flex items-center gap-2 py-2">
                   <Clock size={16} /> Waiting for result...

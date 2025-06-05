@@ -109,6 +109,23 @@ To trigger the tool from the UI:
 
    The assistant will call the tool and display the generated summary.
 
+## Creating graphics
+
+The `create_graphic` function uses the gpt-4o model to generate an image. The assistant always applies the following style prompt:
+
+"Create a digital illustration of a confident young man in the distinctive Persona 5 art style: bold, sharp lines, dynamic shading, and vibrant colors. The character has spiky blond hair, wears bright red rectangular glasses, and a red polo shirt. He should have a playful, friendly expression, with a slight smirk. The background should be minimal or plain to keep full focus on the character. No conference logos or city landmarks. Emphasize the red polo and red glasses as signature features."
+
+You can provide extra description which will be appended when generating the image.
+
+1. Enable **Functions** in the **Tools** panel.
+2. Ask the assistant to create a graphic, for example:
+
+   ```
+   Create a playful pose using the create_graphic tool.
+   ```
+
+   The assistant will call the tool, display the generated image, and you can reload it with additional context if needed.
+
 ### Exporting summaries
 
 All summaries generated during a session are stored in `public/summaries.json`. You can convert this list into a Markdown file with:

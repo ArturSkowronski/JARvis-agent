@@ -7,19 +7,28 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ message }) => {
+  const content = message.content[0];
+
+  const renderContent = () => {
+    if (content.type === "image_url") {
+      return (
+        <img
+          src={content.image_url}
+          alt="generated"
+          className="max-w-full rounded-md"
+        />
+      );
+    }
+    return <ReactMarkdown>{content.text as string}</ReactMarkdown>;
+  };
+
   return (
     <div className="text-sm">
       {message.role === "user" ? (
         <div className="flex justify-end">
           <div>
-            <div className="ml-4 rounded-[16px] px-4 py-2 md:ml-24 bg-[#ededed] text-stone-900  font-light">
-              <div>
-                <div>
-                  <ReactMarkdown>
-                    {message.content[0].text as string}
-                  </ReactMarkdown>
-                </div>
-              </div>
+            <div className="ml-4 rounded-[16px] px-4 py-2 md:ml-24 bg-[#ededed] text-stone-900 font-light">
+              {renderContent()}
             </div>
           </div>
         </div>
@@ -27,11 +36,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
         <div className="flex flex-col">
           <div className="flex">
             <div className="mr-4 rounded-[16px] px-4 py-2 md:mr-24 text-black bg-white font-light">
-              <div>
-                <ReactMarkdown>
-                  {message.content[0].text as string}
-                </ReactMarkdown>
-              </div>
+              {renderContent()}
             </div>
           </div>
         </div>
