@@ -140,13 +140,17 @@ This will produce a `results.md` file listing each URL followed by its summary.
 ### Creating a draft
 
 All generated images are stored in `public/images.json`. You can compile all
-summaries and uploaded image links into `draft.md` using the `create_draft` tool
-or by running `npm run generate-draft`. Alternatively, you can call the API
-directly with:
+summaries and uploaded image links into `draft.md` using the `generate_draft`
+task from the chat interface or by running `npm run generate-draft` locally.
+The script writes the file and attempts to open it with your default Markdown
+viewer. Alternatively, you can call the API directly with:
 
 ```bash
 curl -X POST http://localhost:3000/api/functions/create_draft
 ```
+
+The API responds with a JSON object containing `url`, pointing to the generated
+`draft.md` file which can be opened in your browser.
 
 The markdown file lists each original URL with its summary followed by the
 uploaded images at the end.
