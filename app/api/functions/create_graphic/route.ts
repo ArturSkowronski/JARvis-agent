@@ -16,6 +16,21 @@ export async function POST(request: Request) {
     });
 
     const url = res.data[0]?.url;
+    try {
+      const { promises: fs } = await import("fs");
+      const path = (await import("path")).default;
+      const imagesFile = path.join(process.cwd(), "public", "images.json");
+      let existing: any[] = [];
+      try {
+        existing = JSON.parse(await fs.readFile(imagesFile, "utf8"));
+      } catch {
+        existing = [];
+      }
+      existing.push(url);
+      await fs.writeFile(imagesFile, JSON.stringify(existing, null, 2));
+    } catch (err) {
+      console.error("Error writing images:", err);
+    }
     return new Response(JSON.stringify({ url }), { status: 200 });
   } catch (error) {
     console.error("Error creating graphic:", error);

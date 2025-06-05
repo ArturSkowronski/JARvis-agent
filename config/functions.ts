@@ -50,6 +50,7 @@ export const fact_check = async ({ text }: { text: string }) => {
 };
 
 import useSummaryStore from "@/stores/useSummaryStore";
+import useImageStore from "@/stores/useImageStore";
 
 export const summarize_url = async ({
   url,
@@ -80,6 +81,17 @@ export const create_graphic = async ({
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ description }),
   });
+  const data = await res.json();
+  if (data.url) {
+    useImageStore.getState().addImage({ url: data.url });
+  }
+  return data;
+};
+
+export const create_draft = async () => {
+  const res = await fetch(`/api/functions/create_draft`, {
+    method: "POST",
+  });
   return res.json();
 };
 
@@ -89,4 +101,5 @@ export const functionsMap = {
   fact_check: fact_check,
   summarize_url: summarize_url,
   create_graphic: create_graphic,
+  create_draft: create_draft,
 };

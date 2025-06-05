@@ -64,4 +64,9 @@ export const toolsList = [
       },
     },
   },
+  {
+    name: "create_draft",
+    description: "Compile all summaries and images into draft.md",
+    parameters: {},
+  },
 ];
