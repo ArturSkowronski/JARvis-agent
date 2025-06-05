@@ -63,7 +63,7 @@ export async function POST() {
 
     await fs.writeFile(draftPath, md);
 
-    return NextResponse.json({ draft: "draft.md" });
+    return NextResponse.json({ url: "/draft.md" });
   } catch (error) {
     console.error("Error creating draft:", error);
     return NextResponse.json({ error: "Failed to create draft" }, { status: 500 });

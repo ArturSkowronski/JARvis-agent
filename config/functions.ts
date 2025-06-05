@@ -95,6 +95,20 @@ export const create_draft = async () => {
   return res.json();
 };
 
+export const generate_draft = async () => {
+  const res = await fetch(`/api/functions/create_draft`, {
+    method: "POST",
+  });
+  const data = await res.json();
+  if (data.url) {
+    return { url: data.url };
+  }
+  if (data.draft) {
+    return { url: `/${data.draft}` };
+  }
+  return data;
+};
+
 export const functionsMap = {
   get_weather: get_weather,
   get_joke: get_joke,
@@ -102,4 +116,5 @@ export const functionsMap = {
   summarize_url: summarize_url,
   create_graphic: create_graphic,
   create_draft: create_draft,
+  generate_draft: generate_draft,
 };

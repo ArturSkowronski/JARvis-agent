@@ -1,5 +1,23 @@
 const fs = require('fs');
 const path = require('path');
+const { exec } = require('child_process');
+
+function openFile(filePath) {
+  const platform = process.platform;
+  let cmd;
+  if (platform === 'darwin') {
+    cmd = `open "${filePath}"`;
+  } else if (platform === 'win32') {
+    cmd = `start "" "${filePath}"`;
+  } else {
+    cmd = `xdg-open "${filePath}"`;
+  }
+  exec(cmd, (err) => {
+    if (err) {
+      console.error('Failed to open draft:', err.message);
+    }
+  });
+}
 
 async function generate() {
   const summariesPath = path.join(__dirname, '..', 'public', 'summaries.json');
@@ -60,6 +78,7 @@ async function generate() {
 
   fs.writeFileSync(draftPath, md);
   console.log('Wrote', draftPath);
+  openFile(draftPath);
 }
 
 if (require.main === module) {
