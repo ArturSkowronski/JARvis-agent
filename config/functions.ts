@@ -49,8 +49,21 @@ export const fact_check = async ({ text }: { text: string }) => {
   return completion.choices[0].message.content;
 };
 
+export const summarize_url = async ({
+  url,
+  mode,
+}: {
+  url: string;
+  mode: "reference" | "describe" | "release";
+}) => {
+  const params = new URLSearchParams({ url, mode });
+  const res = await fetch(`/api/functions/summarize_url?${params.toString()}`);
+  return await res.json();
+};
+
 export const functionsMap = {
   get_weather: get_weather,
   get_joke: get_joke,
   fact_check: fact_check,
+  summarize_url: summarize_url,
 };

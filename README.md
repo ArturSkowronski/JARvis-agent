@@ -87,7 +87,27 @@ script.
    ```
 
    The assistant will call the tool and display the results in the
-   conversation.
+  conversation.
+
+## Summarizing links
+
+The `summarize_url` function lets the assistant fetch a web page and produce a concise summary.
+You can control the style with the `mode` parameter:
+
+- `reference` – Include a citation to the author, e.g. `In [title](url) @Author wrote ...`.
+- `describe` – Provide a short description without citing the author.
+- `release` – Focus on the gains or improvements described in the linked release notes.
+
+To trigger the tool from the UI:
+
+1. Ensure the **Functions** toggle is enabled in the **Tools** panel.
+2. Ask the assistant to summarize a link, for example:
+
+   ```
+   Summarize https://example.com in reference mode using the summarize_url tool.
+   ```
+
+   The assistant will call the tool and display the generated summary.
 
 ## Contributing
 

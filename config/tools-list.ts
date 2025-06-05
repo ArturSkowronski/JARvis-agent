@@ -33,4 +33,20 @@ export const toolsList = [
       },
     },
   },
+  {
+    name: "summarize_url",
+    description: "Summarize the content of a URL in different styles",
+    parameters: {
+      url: {
+        type: "string",
+        description: "The URL to summarize",
+      },
+      mode: {
+        type: "string",
+        enum: ["reference", "describe", "release"],
+        description:
+          "How to present the summary: reference the author, describe the event, or highlight release gains",
+      },
+    },
+  },
 ];
