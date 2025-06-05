@@ -70,9 +70,23 @@ export const summarize_url = async ({
   return data;
 };
 
+export const create_graphic = async ({
+  description,
+}: {
+  description: string;
+}) => {
+  const res = await fetch(`/api/functions/create_graphic`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ description }),
+  });
+  return res.json();
+};
+
 export const functionsMap = {
   get_weather: get_weather,
   get_joke: get_joke,
   fact_check: fact_check,
   summarize_url: summarize_url,
+  create_graphic: create_graphic,
 };

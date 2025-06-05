@@ -7,9 +7,15 @@ import { Annotation } from "@/components/annotations";
 import { functionsMap } from "@/config/functions";
 
 export interface ContentItem {
-  type: "input_text" | "output_text" | "refusal" | "output_audio";
+  type:
+    | "input_text"
+    | "output_text"
+    | "refusal"
+    | "output_audio"
+    | "image_url";
   annotations?: Annotation[];
   text?: string;
+  image_url?: string;
 }
 
 // Message items for storing conversation history matching API shape

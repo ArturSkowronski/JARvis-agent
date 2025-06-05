@@ -54,4 +54,14 @@ export const toolsList = [
     },
     required: ["url", "mode"],
   },
+  {
+    name: "create_graphic",
+    description: "Generate an image using the gpt-4o model",
+    parameters: {
+      description: {
+        type: "string",
+        description: "Additional description for the image",
+      },
+    },
+  },
 ];

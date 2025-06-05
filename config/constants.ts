@@ -22,3 +22,6 @@ export const defaultVectorStore = {
   id: "",
   name: "Example",
 };
+
+export const GRAPHIC_STYLE_PROMPT =
+  "Create a digital illustration of a confident young man in the distinctive Persona 5 art style: bold, sharp lines, dynamic shading, and vibrant colors. The character has spiky blond hair, wears bright red rectangular glasses, and a red polo shirt. He should have a playful, friendly expression, with a slight smirk. The background should be minimal or plain to keep full focus on the character. No conference logos or city landmarks. Emphasize the red polo and red glasses as signature features.";
