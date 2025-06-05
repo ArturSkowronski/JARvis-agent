@@ -50,7 +50,7 @@ export const getTools = () => {
           parameters: {
             type: "object",
             properties: { ...tool.parameters },
-            required: Object.keys(tool.parameters),
+            required: tool.required || Object.keys(tool.parameters),
             additionalProperties: false,
           },
           strict: true,

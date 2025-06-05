@@ -47,6 +47,11 @@ export const toolsList = [
         description:
           "How to present the summary: reference the author, describe the event, or highlight release gains",
       },
+      paragraphs: {
+        type: "integer",
+        description: "Number of paragraphs to summarize into",
+      },
     },
+    required: ["url", "mode"],
   },
 ];
