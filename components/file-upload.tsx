@@ -98,7 +98,17 @@ export default function FileUpload({
     setUploading(true);
 
     try {
-      const arrayBuffer = await file.arrayBuffer();
+      let arrayBuffer: ArrayBuffer;
+      try {
+        arrayBuffer = await file.arrayBuffer();
+      } catch (readErr) {
+        console.error("Error reading file:", readErr);
+        alert(
+          "Unable to read the selected file. Please check its permissions and try again."
+        );
+        setUploading(false);
+        return;
+      }
       const base64Content = arrayBufferToBase64(arrayBuffer);
       const fileObject = {
         name: file.name,
