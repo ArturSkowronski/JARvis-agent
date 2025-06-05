@@ -34,6 +34,7 @@ This app is meant to be used as a starting point to build a conversational assis
 
    ```bash
    OPENAI_API_KEY=<your_api_key>
+   IMGUR_CLIENT_ID=<your_imgur_client_id>
    ```
 
 3. **Clone the Repository:**
@@ -135,6 +136,19 @@ npm run generate-results
 ```
 
 This will produce a `results.md` file listing each URL followed by its summary.
+
+### Creating a draft
+
+All generated images are stored in `public/images.json`. You can compile all
+summaries and uploaded image links into `draft.md` using the `create_draft` tool
+or by running:
+
+```bash
+curl -X POST http://localhost:3000/api/functions/create_draft
+```
+
+The markdown file lists each original URL with its summary followed by the
+uploaded images at the end.
 
 ## Contributing
 
