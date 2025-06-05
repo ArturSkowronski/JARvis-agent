@@ -23,4 +23,14 @@ export const toolsList = [
     description: "Get a programming joke",
     parameters: {},
   },
+  {
+    name: "fact_check",
+    description: "Check the factual accuracy of a block of text",
+    parameters: {
+      text: {
+        type: "string",
+        description: "The text to fact check",
+      },
+    },
+  },
 ];

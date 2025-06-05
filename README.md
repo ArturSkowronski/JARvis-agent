@@ -61,7 +61,9 @@ This app is meant to be used as a starting point to build a conversational assis
 ## Fact checking script
 
 An additional script `scripts/fact-check.js` reads the contents of `input.md` and
-uses the `gpt-4o` model to verify each factual claim. Run it with:
+uses the `gpt-4o` model to verify each factual claim. It also exports a
+`factCheck` function which is registered as a tool with the AGENT SDK. Run the
+CLI script with:
 
 ```bash
 node scripts/fact-check.js
@@ -69,6 +71,23 @@ node scripts/fact-check.js
 
 Ensure your `OPENAI_API_KEY` environment variable is set before running the
 script.
+
+### Triggering the `fact_check` tool from the UI
+
+1. Start the development server with `npm run dev` and open
+   [`http://localhost:3000`](http://localhost:3000).
+2. Open the **Tools** panel – on desktop it appears on the right side; on
+   mobile devices use the menu button to reveal it.
+3. Verify that the **Functions** toggle is enabled. The `fact_check` function
+   is listed with its parameters.
+4. In the chat box, ask the assistant to fact check your text, for example:
+
+   ```
+   Use the fact_check tool on: "The sky is green and dolphins are fish."
+   ```
+
+   The assistant will call the tool and display the results in the
+   conversation.
 
 ## Contributing
 
